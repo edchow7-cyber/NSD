@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Nera Secure Data Analyst — Activate AI on Your Most Sensitive Data</title>
+<meta name="description" content="The Nera Secure Data Analyst lets you use commercial LLMs on your most sensitive data — encrypted before it leaves your environment, never decrypted in the cloud." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Brand */
+    --nera-cyan:    #2EA9DC;
+    --nera-cyan-2:  #1E89BD;
+    --nera-cyan-3:  #B8DDF2;
+    --nera-navy:    #0F2B5C;
+    --nera-navy-2:  #061833;
+    --nera-ice:     #EAF2FB;
+    --nera-azure:   #C7DEF5;
+    --nera-mist:    #F5F8FC;
+    --nera-paper:   #FFFFFF;
+
+    /* Ink */
+    --ink:        #0B1F3F;
+    --ink-soft:   #4A5D7C;
+    --ink-fade:   #7B8AA3;
+    --line:       #D6E1EF;
+    --line-soft:  #E6EDF6;
+
+    /* Accents */
+    --signal: #19C39A;
+
+    --radius-s: 8px;
+    --radius-m: 14px;
+    --radius-l: 22px;
+
+    --max: 1240px;
+    --gutter: clamp(20px, 4vw, 48px);
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--nera-paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection{ background: var(--nera-navy); color: var(--nera-ice); }
+
+  a{ color: inherit; text-decoration: none; }
+  button{ font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+  img, svg{ display:block; max-width:100%; }
+
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ---------- Type ---------- */
+  .mono{ font-family:'JetBrains Mono', ui-monospace, monospace; }
+
+  .label{
+    font-family:'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--nera-cyan);
+  }
+
+  h1,h2,h3,h4{ margin:0; line-height:1.1; letter-spacing:-0.02em; font-weight: 600;}
+  p{ color: var(--ink-soft); font-size: 16.5px; line-height: 1.6; margin:0;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    height: 50px; padding: 0 24px;
+    border-radius: 10px;
+    font-weight: 500; font-size: 15px;
+    transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease, border-color .2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary{
+    background: var(--nera-cyan); color: white;
+    box-shadow: 0 6px 24px -8px rgba(46,169,220,.55);
+  }
+  .btn-primary:hover{ background: var(--nera-cyan-2); transform: translateY(-1px);}
+  .btn-navy{
+    background: var(--nera-navy); color: white;
+  }
+  .btn-navy:hover{ background: var(--nera-cyan); }
+  .btn-ghost{
+    background: transparent; color: var(--nera-navy);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color: var(--nera-navy); }
+  .arrow{ display:inline-block; transition: transform .2s ease;}
+  .btn:hover .arrow{ transform: translateX(3px); }
+
+  /* ---------- Nav ---------- */
+  nav.top{
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px) saturate(140%);
+    background: rgba(255,255,255,.85);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 72px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{
+    width: 30px; height: 30px; position: relative;
+  }
+  .logo-mark::before, .logo-mark::after{
+    content:""; position:absolute; inset:0;
+    border: 1.8px solid var(--nera-navy);
+    transform: rotate(8deg);
+  }
+  .logo-mark::after{
+    border-color: var(--nera-cyan);
+    transform: rotate(-12deg) translate(2px,2px);
+    background: rgba(46,169,220,.08);
+  }
+  .logo-text{ font-weight:700; font-size: 19px; color: var(--nera-cyan); letter-spacing:-0.01em;}
+  .logo-text small{ display:block; font-size: 9.5px; letter-spacing: 0.32em; color: var(--nera-navy); font-weight:700; margin-top:-2px; }
+  .nav-links{ display:flex; gap: 32px; }
+  .nav-links a{ font-size: 14.5px; color: var(--ink-soft); font-weight: 500; transition: color .15s ease;}
+  .nav-links a:hover{ color: var(--nera-navy); }
+  .nav-cta{ display:flex; gap:10px; align-items:center;}
+  @media (max-width: 900px){ .nav-links{ display:none; } .nav-cta .btn-ghost{ display: none;}}
+
+  /* ---------- Hero ---------- */
+  section.hero{
+    position: relative; padding: 90px 0 110px; overflow: hidden;
+    background: var(--nera-ice);
+  }
+  .hero-bg{
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image: radial-gradient(rgba(15,43,92,.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 60% at 75% 50%, black 30%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 75% 50%, black 30%, transparent 78%);
+  }
+  .hero > .wrap{ position: relative; z-index: 1;}
+
+  .hero-grid{
+    display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+  }
+  @media (max-width: 980px){ .hero-grid{ grid-template-columns: 1fr; gap: 56px;}}
+
+  .hero .label{ margin-bottom: 22px; display: inline-block; }
+  .hero h1{
+    font-family:'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: clamp(40px, 5.6vw, 76px);
+    line-height: 1.02; letter-spacing:-0.03em;
+    color: var(--nera-navy);
+    margin-bottom: 24px;
+  }
+  .hero h1 .accent{ color: var(--nera-cyan); }
+  .hero-sub{
+    font-size: 18px; color: var(--ink-soft); max-width: 520px;
+    line-height: 1.55; margin-bottom: 32px;
+  }
+  .hero-ctas{ display:flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px;}
+
+  /* Hero demo card */
+  .demo-stack{ position: relative;}
+  .demo-card{
+    background: var(--nera-navy-2);
+    border-radius: var(--radius-l);
+    padding: 22px 22px 18px;
+    color: #C9D8F0;
+    box-shadow:
+      0 50px 80px -30px rgba(15,43,92,.45),
+      0 1px 0 rgba(255,255,255,.08) inset,
+      0 0 0 1px rgba(46,169,220,.18);
+    position: relative; z-index: 2;
+  }
+  .demo-card::before{
+    content:""; position:absolute; inset: 0;
+    background: radial-gradient(800px 200px at 50% -50%, rgba(46,169,220,.18), transparent 60%);
+    border-radius: inherit; pointer-events:none;
+  }
+  .demo-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.06);
+    margin-bottom: 14px;
+  }
+  .demo-head .left{ display:flex; align-items:center; gap: 10px;}
+  .demo-head .dot{ width:8px; height:8px; border-radius: 50%;}
+  .demo-dots{ display:flex; gap:6px;}
+  .demo-dots .dot:nth-child(1){ background:#FF5F57;}
+  .demo-dots .dot:nth-child(2){ background:#FEBC2E;}
+  .demo-dots .dot:nth-child(3){ background:#28C840;}
+  .demo-head b{ color: white; font-weight: 600; font-size: 13px; letter-spacing: -0.01em;}
+  .demo-head .badge{
+    font-family:'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--nera-cyan); padding: 4px 9px;
+    border: 1px solid rgba(46,169,220,.4); border-radius: 999px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display:flex; align-items:center; gap:6px;
+  }
+  .demo-head .badge::before{
+    content:""; width: 6px; height:6px; border-radius:50%;
+    background: var(--signal); box-shadow: 0 0 10px var(--signal);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:.5;} 50%{opacity:1;} }
+
+  .filepill{
+    display: inline-flex; align-items:center; gap: 8px;
+    background: rgba(46,169,220,.1);
+    border: 1px solid rgba(46,169,220,.25);
+    color: #B8DDF2;
+    padding: 6px 12px; border-radius: 999px;
+    font-size: 12px; font-family:'JetBrains Mono', monospace;
+    margin-bottom: 14px;
+  }
+  .filepill svg{ width: 13px; height: 13px;}
+
+  .msg{ margin-bottom: 14px; display:flex; gap: 10px; }
+  .msg.user{ justify-content:flex-end;}
+  .bubble{
+    max-width: 86%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 14px; line-height: 1.45;
+  }
+  .bubble.user{
+    background: var(--nera-cyan); color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .bubble.ai{
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.07);
+    color: #DCE7F5;
+    border-bottom-left-radius: 4px;
+  }
+  .bubble.ai b{ color: white;}
+  .bubble.ai .h{ color: var(--nera-cyan);}
+
+  .pipeline{
+    margin: 14px 0;
+    display:grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center; gap: 8px;
+    background: rgba(255,255,255,.025);
+    border: 1px dashed rgba(255,255,255,.08);
+    border-radius: 12px; padding: 10px;
+  }
+  .pipeline .step{
+    text-align:center; font-size: 10.5px; font-family:'JetBrains Mono', monospace;
+    color: #94B3D4; letter-spacing: 0.05em;
+    padding: 6px 4px;
+  }
+  .pipeline .step.active{ color: var(--nera-cyan); }
+  .pipeline .step b{ display:block; color: white; font-size: 11px; font-weight: 500; margin-bottom: 3px;
+    font-family: 'DM Sans', sans-serif; letter-spacing: 0; }
+  .pipeline .arrow-i{ color: rgba(255,255,255,.25); font-size: 14px;}
+
+  .cipher{
+    font-family:'JetBrains Mono', monospace; font-size: 11px; color: rgba(46,169,220,.5);
+    background: rgba(46,169,220,.05); border-radius: 6px; padding: 6px 8px; margin: 4px 0;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    letter-spacing: 0.02em;
+  }
+  .cipher.shimmer{
+    background: linear-gradient(90deg, rgba(46,169,220,.05) 0%, rgba(46,169,220,.18) 50%, rgba(46,169,220,.05) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.4s linear infinite;
+  }
+  @keyframes shimmer{ 0%{background-position: 200% 0;} 100%{background-position: -200% 0;}}
+
+  .demo-input{
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.06);
+    display:flex; gap: 8px; align-items:center;
+  }
+  .demo-input .field{
+    flex: 1; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: 0 14px;
+    font-size: 13px; color: rgba(255,255,255,.5);
+    display:flex; align-items:center;
+  }
+  .demo-input .field::after{
+    content:""; width: 1px; height: 14px; background: var(--nera-cyan);
+    margin-left: 4px; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+  .demo-input .send{
+    height: 40px; padding: 0 16px; background: var(--nera-cyan);
+    border-radius: 10px; color: white; font-size: 13px; font-weight: 500;
+    display:flex; align-items:center; gap: 6px;
+  }
+
+  /* Pinned trust cards */
+  .pin{
+    position: absolute; z-index: 3;
+    background: white; border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 14px;
+    box-shadow: 0 20px 50px -20px rgba(15,43,92,.25);
+    display:flex; align-items:center; gap: 10px;
+    font-size: 12.5px; color: var(--ink);
+  }
+  .pin svg{ width: 18px; height: 18px; color: var(--nera-cyan);}
+  .pin small{ display:block; font-size: 10px; color: var(--ink-fade); letter-spacing: 0.06em; text-transform: uppercase; font-family:'JetBrains Mono', monospace;}
+  .pin b{ font-weight: 600; color: var(--nera-navy); }
+  .pin-1{ top: -22px; left: -32px;}
+  .pin-2{ bottom: -28px; right: -28px;}
+  @media (max-width: 980px){ .pin-1{ left: 8px;} .pin-2{ right: 8px;}}
+
+  /* ---------- Section header ---------- */
+  .sec-head{
+    text-align: center;
+    margin-bottom: 56px;
+    max-width: 760px; margin-left:auto; margin-right:auto;
+  }
+  .sec-head .label{ margin-bottom: 18px; display: inline-block;}
+  .sec-head h2{
+    font-size: clamp(30px, 4vw, 44px);
+    color: var(--nera-navy);
+    line-height: 1.1; letter-spacing:-0.025em;
+    margin-bottom: 14px;
+  }
+  .sec-head p{ font-size: 17px;}
+  .sec-head p.bridge{
+    margin-top: 20px;
+    color: var(--nera-navy);
+    font-weight: 500;
+  }
+
+  .sec-head.left{ text-align: left; max-width: none;}
+
+  /* ---------- Problem ---------- */
+  section.problem{ padding: 110px 0; background: white;}
+  .problem-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  @media (max-width: 820px){ .problem-grid{ grid-template-columns: 1fr;}}
+  .problem-card{
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    padding: 32px 28px;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .problem-card:hover{
+    transform: translateY(-3px);
+    border-color: var(--nera-cyan);
+    box-shadow: 0 22px 50px -28px rgba(15,43,92,.3);
+  }
+  .problem-card .ico{
+    width: 52px; height: 52px; border-radius: 12px;
+    background: var(--nera-ice);
+    display:flex; align-items:center; justify-content: center;
+    color: var(--nera-cyan);
+    margin-bottom: 22px;
+  }
+  .problem-card h3{
+    font-size: 22px; font-weight: 600;
+    color: var(--nera-navy); margin-bottom: 10px;
+  }
+  .problem-card p{ font-size: 14.5px;}
+  .problem-card .cost{
+    display:inline-block; margin-top: 18px;
+    font-family:'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--nera-cyan); letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ---------- How it works ---------- */
+  section.how{
+    padding: 110px 0;
+    background: var(--nera-ice);
+  }
+  .flow{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    background: white;
+  }
+  @media (max-width: 820px){ .flow{ grid-template-columns: 1fr;}}
+  .flow-step{
+    padding: 36px 32px;
+    border-right: 1px solid var(--line-soft);
+    position: relative;
+  }
+  .flow-step:last-child{ border-right: 0;}
+  @media (max-width: 820px){
+    .flow-step{ border-right: 0; border-bottom: 1px solid var(--line-soft);}
+    .flow-step:last-child{ border-bottom: 0;}
+  }
+  .flow-step .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: var(--nera-cyan); letter-spacing: 0.18em;
+    margin-bottom: 18px;
+  }
+  .flow-step h3{
+    font-size: 22px; font-weight: 600;
+    color: var(--nera-navy); margin-bottom: 12px;
+  }
+  .flow-step p{ font-size: 15px; line-height: 1.6;}
+  .flow-step .visual{
+    margin-top: 22px;
+    height: 56px;
+    border-radius: 10px;
+    background: var(--nera-mist);
+    border: 1px dashed var(--line);
+    display:flex; align-items: center; justify-content: center;
+    font-family:'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-fade); letter-spacing: 0.08em;
+    padding: 0 14px;
+  }
+  .flow-step .visual.cipher-v{
+    color: var(--nera-cyan); background: rgba(46,169,220,.06); border-color: var(--nera-cyan);
+    border-style: solid;
+  }
+  .flow-step .visual svg{ width:20px; height: 20px; color: var(--nera-cyan); margin-right: 10px; flex-shrink: 0;}
+
+  /* ---------- Product showcase ---------- */
+  section.product{
+    padding: 110px 0;
+    background: white;
+    position: relative;
+  }
+  .product-shell{
+    background: var(--nera-navy-2);
+    border-radius: var(--radius-l);
+    padding: 32px;
+    box-shadow: 0 80px 120px -50px rgba(15,43,92,.5);
+    position: relative;
+    overflow: hidden;
+  }
+  .product-shell::before{
+    content:""; position:absolute; inset: 0;
+    background:
+      radial-gradient(800px 300px at 80% 0%, rgba(46,169,220,.18), transparent 60%),
+      radial-gradient(600px 300px at 0% 100%, rgba(46,169,220,.1), transparent 60%);
+    pointer-events: none;
+  }
+  .product-grid{
+    display:grid; grid-template-columns: 1fr 1.4fr; gap: 32px;
+    position: relative; z-index: 1;
+  }
+  @media (max-width: 880px){ .product-grid{ grid-template-columns: 1fr;}}
+  .product-side{
+    color: white; padding: 8px 4px;
+  }
+  .product-side .tag{
+    display:inline-block; padding: 6px 12px;
+    font-family:'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border: 1px solid rgba(46,169,220,.4); color: var(--nera-cyan);
+    border-radius: 999px; margin-bottom: 22px;
+  }
+  .product-side h3{
+    font-size: clamp(28px, 3.5vw, 38px); font-weight: 600;
+    line-height: 1.1; letter-spacing:-0.02em;
+    margin-bottom: 16px;
+  }
+  .product-side h3 span{ color: var(--nera-cyan);}
+  .product-side p{ color: rgba(234,242,251,.7); font-size: 15.5px; margin-bottom: 24px;}
+  .checks{ list-style: none; padding: 0; margin: 0;}
+  .checks li{
+    display:flex; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    font-size: 14.5px; color: rgba(234,242,251,.85);
+  }
+  .checks li:last-child{ border-bottom: 0;}
+  .checks li svg{
+    width: 16px; height:16px; color: var(--nera-cyan); flex-shrink:0; margin-top: 3px;
+  }
+  .product-side .btn-row{ margin-top: 24px; display:flex; gap: 10px;}
+  .ease-tags{
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 22px;
+  }
+  .ease-tags span{
+    padding: 6px 12px;
+    border: 1px solid rgba(46,169,220,.25);
+    background: rgba(46,169,220,.06);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: rgba(234,242,251,.85);
+  }
+
+  .chat-window{
+    background: linear-gradient(180deg, #061833, #0A2244);
+    border-radius: var(--radius-l);
+    border: 1px solid rgba(255,255,255,.08);
+    overflow: hidden;
+    min-height: 480px;
+    display: flex; flex-direction: column;
+  }
+  .chat-top{
+    padding: 14px 18px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: white; font-size: 13px;
+  }
+  .chat-top .left{ display:flex; align-items:center; gap: 10px;}
+  .chat-top b{ font-weight: 600;}
+  .chat-top .pill{
+    background: rgba(46,169,220,.1); border:1px solid rgba(46,169,220,.3);
+    color: var(--nera-cyan); padding: 4px 10px; border-radius: 999px;
+    font-family:'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+  }
+  .chat-body{
+    padding: 22px 22px 14px;
+    flex: 1;
+    background-image:
+      radial-gradient(rgba(46,169,220,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: -10px -10px;
+  }
+  .chat-body .msg{ margin-bottom: 16px;}
+  .chat-body .bubble{ font-size: 13.5px;}
+  .chat-body .bubble.ai{ max-width: 92%;}
+  .chat-input{
+    padding: 14px 18px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    display:flex; gap: 10px;
+  }
+  .chat-input .files{
+    height: 38px; padding: 0 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.6);
+    font-size: 12.5px; display:flex; align-items:center; gap: 6px;
+    background: rgba(255,255,255,.02);
+  }
+  .chat-input .ask{
+    flex:1; height:38px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+    padding: 0 14px; display:flex; align-items: center;
+    color: rgba(255,255,255,.5); font-size: 13px;
+  }
+  .chat-input .send{
+    height: 38px; padding: 0 18px; border-radius: 10px;
+    background: linear-gradient(180deg, var(--nera-cyan), #1A85B8);
+    color: white; font-size: 13px; font-weight: 500;
+    display:flex; align-items:center; gap: 6px;
+  }
+
+  .data-preview{
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.02);
+    border-radius: 10px;
+    padding: 0; margin-top: 8px;
+    font-family:'JetBrains Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,.7);
+    overflow: hidden;
+  }
+  .data-preview .row{
+    display:grid; grid-template-columns: 1fr 1fr 1fr 0.8fr;
+    padding: 7px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .data-preview .row:last-child{ border-bottom: 0;}
+  .data-preview .row.head{
+    background: rgba(46,169,220,.06); color: var(--nera-cyan);
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .data-preview .row .ciph{ color: rgba(46,169,220,.5);}
+
+  /* ---------- Use cases ---------- */
+  section.usecases{
+    padding: 110px 0;
+    background: white;
+  }
+  .use-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  @media (max-width: 820px){ .use-grid{ grid-template-columns: 1fr;}}
+  .use{
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    padding: 32px;
+    display:flex; gap: 18px;
+    transition: border-color .25s, transform .25s;
+  }
+  .use:hover{ border-color: var(--nera-navy); transform: translateY(-2px);}
+  .use .num{
+    font-family:'JetBrains Mono', monospace;
+    font-weight: 500; font-size: 13px;
+    color: var(--nera-cyan); letter-spacing: 0.14em;
+    flex-shrink: 0; padding-top: 4px; min-width: 36px;
+  }
+  .use .body h4{
+    font-size: 20px; font-weight: 600;
+    color: var(--nera-navy); margin-bottom: 10px;
+  }
+  .use .body p{ font-size: 14.5px; line-height: 1.6;}
+  .use .body .ex{
+    margin-top: 14px;
+    background: var(--nera-mist); border-left: 2px solid var(--nera-cyan);
+    padding: 10px 14px; font-size: 12.5px;
+    font-family:'JetBrains Mono', monospace;
+    color: var(--ink); border-radius: 4px;
+    line-height: 1.5;
+  }
+  .use .body .ex i{ color: var(--ink-fade); font-style: normal; display: block; margin-bottom: 4px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;}
+
+  /* ---------- Differentiation ---------- */
+  section.diff{
+    padding: 110px 0;
+    background: var(--nera-ice);
+  }
+  .compare{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+  }
+  @media (max-width: 820px){ .compare{ grid-template-columns: 1fr;}}
+  .compare > div{
+    padding: 36px 32px;
+    background: white;
+  }
+  .compare .with{ background: var(--nera-navy); color: white;}
+  .compare h4{
+    font-family:'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 22px;
+    color: var(--ink-fade); font-weight: 500;
+  }
+  .compare .with h4{ color: var(--nera-cyan);}
+  .compare h3{
+    font-size: 26px; font-weight: 600;
+    color: var(--nera-navy); margin-bottom: 24px; letter-spacing:-0.015em;
+  }
+  .compare .with h3{ color: white;}
+  .compare ul{ list-style: none; padding: 0; margin: 0;}
+  .compare li{
+    display:flex; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 14.5px; color: var(--ink-soft);
+  }
+  .compare .with li{ border-bottom-color: rgba(255,255,255,.07); color: rgba(255,255,255,.85);}
+  .compare li:last-child{ border-bottom: 0;}
+  .compare li svg{ width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px;}
+  .x{ color: #C25F5F;}
+  .check{ color: var(--signal);}
+
+  /* ---------- Pricing ---------- */
+  section.pricing{
+    padding: 110px 0;
+    background: white;
+  }
+  .pricing-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    margin-top: 8px; align-items: stretch;
+    max-width: 880px; margin-left: auto; margin-right: auto;
+  }
+  @media (max-width: 820px){
+    .pricing-grid{ grid-template-columns: 1fr; max-width: 460px;}
+  }
+  .tier{
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    padding: 36px 32px;
+    display: flex; flex-direction: column;
+    position: relative;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .tier:hover{ transform: translateY(-3px); box-shadow: 0 22px 50px -28px rgba(15,43,92,.25);}
+  .tier.featured{
+    border-color: var(--nera-cyan);
+    border-width: 2px;
+    box-shadow: 0 30px 60px -30px rgba(46,169,220,.4);
+  }
+  .tier .tier-badge{
+    position: absolute; top: -12px; right: 24px;
+    background: var(--nera-cyan); color: white;
+    font-family:'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px;
+    font-weight: 500;
+  }
+  .tier .tier-badge.soon{
+    background: var(--ink-fade);
+  }
+  .tier .tier-badge.preview{
+    background: var(--nera-navy);
+    color: var(--nera-cyan);
+    border: 1px solid var(--nera-cyan);
+    box-shadow: 0 4px 14px -4px rgba(46,169,220,.5);
+  }
+  .tier .tier-name{
+    font-size: 20px; font-weight: 600;
+    color: var(--nera-navy); margin-bottom: 6px; letter-spacing: -0.01em;
+  }
+  .tier .tier-desc{
+    font-size: 14px; color: var(--ink-soft); margin-bottom: 24px;
+    min-height: 42px; line-height: 1.5;
+  }
+  .tier .price{
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .tier .price .price-stack{
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .tier .price .amount-old{
+    position: relative;
+    font-size: 36px; font-weight: 600;
+    color: var(--ink-fade);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    padding: 0 4px;
+  }
+  .tier .price .amount-old::after{
+    content: "";
+    position: absolute;
+    left: -4px; right: -4px;
+    top: 50%;
+    height: 3px;
+    background: var(--nera-cyan);
+    transform: rotate(-12deg);
+    border-radius: 2px;
+  }
+  .tier .price .amount{
+    font-size: 42px; font-weight: 700;
+    color: var(--nera-navy); letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .tier .price .unit{
+    font-size: 13px; color: var(--ink-fade); line-height: 1.3;
+  }
+  .tier .price .unit-flag{
+    display: inline-block;
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nera-cyan);
+  }
+  .tier .tier-cta{ margin-bottom: 24px;}
+  .tier .tier-cta .btn{ width: 100%; justify-content: center; height: 46px;}
+  .tier .features-head{
+    font-family:'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-fade); font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .tier .features{
+    list-style: none; padding: 0; margin: 0;
+  }
+  .tier .features li{
+    display: flex; gap: 10px; padding: 7px 0;
+    font-size: 14px; color: var(--ink-soft); line-height: 1.45;
+  }
+  .tier .features li svg{
+    width: 14px; height: 14px; color: var(--nera-cyan); flex-shrink: 0; margin-top: 4px;
+  }
+  .pricing-close{
+    margin-top: 64px;
+    text-align: center;
+    padding-top: 56px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .pricing-close h3{
+    font-size: clamp(28px, 3.6vw, 38px);
+    color: var(--nera-navy); font-weight: 600;
+    letter-spacing: -0.02em; margin: 0 0 12px;
+  }
+  .pricing-close p{
+    font-size: 16.5px;
+    max-width: 540px; margin: 0 auto 28px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background: var(--nera-navy-2);
+    color: rgba(234,242,251,.7);
+    padding: 56px 0 32px;
+    font-size: 13.5px;
+  }
+  .foot-grid{
+    display:grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 40px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 820px){ .foot-grid{ grid-template-columns: 1fr 1fr; gap:32px;}}
+  footer h5{
+    color: white; font-size: 11px; font-family:'JetBrains Mono', monospace;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin: 0 0 16px; font-weight: 500;
+  }
+  footer .col a{
+    display:block; padding: 6px 0; color: rgba(234,242,251,.7);
+    transition: color .15s;
+  }
+  footer .col a:hover{ color: var(--nera-cyan);}
+  footer .brand-col p{ color: rgba(234,242,251,.55); font-size: 13.5px; line-height: 1.6; max-width: 320px; margin-top: 14px;}
+  .foot-bottom{
+    display:flex; justify-content: space-between; padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    font-family:'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; color: rgba(234,242,251,.5);
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer .logo .logo-text{ color: white;}
+
+  /* Reveal */
+  .reveal{ opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease;}
+  .reveal.in{ opacity: 1; transform: translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav class="top">
+  <div class="wrap nav-inner">
+    <a class="logo" href="https://nera.systems">
+      <div class="logo-mark"></div>
+      <div>
+        <div class="logo-text">NERA<small>SYSTEMS</small></div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#solution">The solution</a>
+      <a href="#product">The product</a>
+      <a href="#usecases">Use cases</a>
+      <a href="https://nera.systems/solutions.html">Platform</a>
+      <a href="https://nera.systems/contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://nera.systems/contact.html">Talk to sales</a>
+      <a class="btn btn-primary" href="https://chatapp.nera.systems">Try it <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy reveal in">
+        <div class="label">Nera Secure Data Analyst</div>
+        <h1>Activate AI on the<br>Sensitive Data You<br><span class="accent">Couldn't Touch.</span></h1>
+        <p class="hero-sub">
+          Chat with commercial LLMs over your most sensitive data — without ever exposing it. Encrypted before it leaves your environment. Never decrypted in the cloud. Only you see the data.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-navy" href="https://chatapp.nera.systems">Try it <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#solution">See the solution</a>
+          <a class="btn btn-ghost" href="#pricing">Pricing</a>
+        </div>
+      </div>
+
+      <div class="demo-stack reveal in">
+        <div class="pin pin-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="4" y="11" width="16" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 1 1 8 0v4"/>
+          </svg>
+          <div>
+            <small>Status</small>
+            <b>Data never decrypted in cloud</b>
+          </div>
+        </div>
+
+        <div class="pin pin-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="9" cy="14" r="4"/>
+            <path d="M12.5 11 21 2.5"/>
+            <path d="M17 7l3 3"/>
+          </svg>
+          <div>
+            <small>Key control</small>
+            <b>Customer-held private key</b>
+          </div>
+        </div>
+
+        <div class="demo-card">
+          <div class="msg user">
+            <div class="bubble user">Which 5 customers are most likely to churn next quarter, and why?</div>
+          </div>
+
+          <div class="msg ai">
+            <div class="bubble ai">
+              <b>Top 5 high-risk accounts</b> (decrypted on your machine):
+              <br><span class="h">▸</span> Acme Corp — usage down 62% in 60d
+              <br><span class="h">▸</span> Northwind Trading — CSAT dropped to 3.1
+              <br><span class="h">▸</span> Globex Industries — 3 pricing tickets
+              <br><span class="h">▸</span> Initech — exec sponsor churned
+              <br><span class="h">▸</span> Stark Holdings — renewal stalled
+              <br><br>Source data was never visible to the model.
+            </div>
+          </div>
+
+          <div class="demo-input">
+            <div class="field">Ask another question…</div>
+            <div class="send">Send →</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROBLEM ============== -->
+<section class="problem">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">The problem</span>
+      <h2>AI Is Unusable on the Data That Matters Most.</h2>
+      <p>Your most valuable data — customers, transactions, contracts, patient records — is also your most restricted. Today, that data sits on the sidelines while AI transforms every other part of the business.</p>
+      <p class="bridge">The hesitation is grounded in three real risks compliance, legal, and security teams can't ignore.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M12 13v3"/>
+            <circle cx="12" cy="18.5" r="0.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Regulatory exposure</h3>
+        <p>Sending sensitive data to public LLMs can breach GDPR, HIPAA, SOX, and a stack of internal policies. The fines, audits, and breach notifications outweigh any AI upside.</p>
+        <div class="cost">→ Audit failure</div>
+      </div>
+
+      <div class="problem-card">
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0"/>
+          </svg>
+        </div>
+        <h3>IP leakage</h3>
+        <p>Your pricing models, customer behavior, and trade secrets flow into systems you don't control. Many providers retain prompts. Some use them to train future models — your data, training your competitors' AI.</p>
+        <div class="cost">→ Competitive risk</div>
+      </div>
+
+      <div class="problem-card">
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M21 21l-4.3-4.3"/>
+            <path d="M9 9l4 4M13 9l-4 4"/>
+          </svg>
+        </div>
+        <h3>No way to govern</h3>
+        <p>Once data leaves your perimeter, you can't audit who saw it, prove it was deleted, or pull it back. Security and compliance teams have no choice but to block — and the most valuable AI use cases die in committee.</p>
+        <div class="cost">→ Compliance blocker</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== THE SOLUTION ============== -->
+<section class="how" id="solution">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">The solution</span>
+      <h2>Nera Secure Data Analyst.</h2>
+      <p>Three risks. Three answers. One product that lets you use commercial LLMs on your most sensitive data — without ever exposing it.</p>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">ENCRYPTION</div>
+        <h3>No data leaves unencrypted</h3>
+        <p>Encryption happens client-side, before a single byte moves. Public LLMs never see plaintext. Your existing GDPR, HIPAA, and SOX posture stays intact.</p>
+        <div class="visual">
+          your_data.xlsx → encrypted
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num">PRIVACY</div>
+        <h3>The model can't read your data</h3>
+        <p>Commercial LLMs operate directly on ciphertext. There's nothing for providers to log, retain, or train on — because there's nothing for them to see.</p>
+        <div class="visual cipher-v">
+          a4f8 ▸ b119 ▸ 6e0c ▸ ff52
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num">CONTROL</div>
+        <h3>Security stays in command</h3>
+        <p>Enterprise controls let your security and compliance teams monitor every prompt, gate user access, and audit complete usage. Your private key never leaves your environment — so AI runs under the same governance as any other critical system.</p>
+        <div class="visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="14" r="4"/>
+            <path d="M12.5 11 21 2.5"/>
+            <path d="M17 7l3 3"/>
+          </svg>
+          monitored · gated · audited
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT ============== -->
+<section class="product" id="product">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">The product</span>
+      <h2>A Chat Interface for the Data You Couldn't Share.</h2>
+      <p>Drop in your sensitive Excel or CSV files, ask any question in plain English, and get a business-ready answer. Powered by commercial LLMs you already trust — used in a way you finally can.</p>
+    </div>
+
+    <div class="product-shell">
+      <div class="product-grid">
+        <div class="product-side">
+          <div class="tag">For business users</div>
+          <h3>If you can chat, <span>you can analyze.</span></h3>
+          <p>Anyone on your team — finance, ops, leadership — runs the analysis themselves. The kind of questions you'd ask a senior analyst, answered in seconds.</p>
+
+          <ul class="checks">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+              Natural-language Q&A on encrypted spreadsheets
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+              Multi-LLM support: Gemini today, ChatGPT and Claude coming soon
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+              No model fine-tuning. No data retention. Zero residue.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+              Enterprise-grade audit, access, and policy controls
+            </li>
+          </ul>
+
+          <div class="ease-tags">
+            <span>no SQL</span>
+            <span>no Python</span>
+            <span>no data engineers</span>
+            <span>no IT tickets</span>
+          </div>
+
+          <div class="btn-row">
+            <a class="btn btn-primary" href="https://chatapp.nera.systems">Try it →</a>
+          </div>
+        </div>
+
+        <div class="chat-window">
+          <div class="chat-body">
+            <div class="msg" style="justify-content:flex-end">
+              <div class="bubble user">Summarize Q4 customer revenue by region and flag any anomalies.</div>
+            </div>
+
+            <div class="msg">
+              <div class="bubble ai">
+                <b>Q4 revenue by region</b> (decrypted on your device):<br>
+                <span class="h">▸</span> Americas: $4.8M (+12% YoY)<br>
+                <span class="h">▸</span> EMEA: $2.6M (+4% YoY)<br>
+                <span class="h">▸</span> APAC: $1.3M (-9% YoY)<br><br>
+                <b>Anomalies flagged:</b> 3 enterprise accounts in APAC dropped &gt;40% MoM in December — recommend follow-up.
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input">
+            <div class="ask">Ask another question…</div>
+            <div class="send">Send →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== USE CASES ============== -->
+<section class="usecases" id="usecases">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Where it works</span>
+      <h2>The Data Compliance Said No To. Now It's an Asset.</h2>
+      <p>Designed for the teams whose best questions have been gated by privacy, regulation, or contracts. Common use cases we hear every week.</p>
+    </div>
+
+    <div class="use-grid">
+      <div class="use">
+        <div class="num">01</div>
+        <div class="body">
+          <h4>Finance & FP&A</h4>
+          <p>Run AI-driven analysis on customer revenue, transaction history, and forecasting data without exposing PII or material non-public information to public LLMs.</p>
+          <div class="ex"><i>example query</i> "Which segments are at risk of missing forecast next quarter, and why?"</div>
+        </div>
+      </div>
+
+      <div class="use">
+        <div class="num">02</div>
+        <div class="body">
+          <h4>Healthcare & life sciences</h4>
+          <p>Query patient-level datasets, claims, and clinical records using commercial AI while remaining inside HIPAA and GDPR boundaries — because the records are never decrypted.</p>
+          <div class="ex"><i>example query</i> "Find subgroups of patients responding fastest to therapy A vs B."</div>
+        </div>
+      </div>
+
+      <div class="use">
+        <div class="num">03</div>
+        <div class="body">
+          <h4>Consumer & retail intelligence</h4>
+          <p>Cross-analyze first-party loyalty data, syndicated panels, and partner datasets without exposing them — so 3rd-party analytics no longer means 3rd-party exposure.</p>
+          <div class="ex"><i>example query</i> "Which loyalty cohorts shifted spend after the Q3 launch?"</div>
+        </div>
+      </div>
+
+      <div class="use">
+        <div class="num">04</div>
+        <div class="body">
+          <h4>HR & people analytics</h4>
+          <p>Analyze comp, performance, and attrition data with the speed of LLM-powered analytics — without compensation tables ever leaving your environment in plaintext.</p>
+          <div class="ex"><i>example query</i> "Where are pay equity gaps emerging across teams and tenure bands?"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DIFFERENTIATION ============== -->
+<section class="diff">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Why Nera</span>
+      <h2>The Gap Others Don't Fill: Encryption That Survives Compute.</h2>
+      <p>LLM vendors solve intelligence. Privacy startups solve cryptography. Nera is the layer that makes the two work together — and ships it as something a business user can actually use.</p>
+    </div>
+
+    <div class="compare">
+      <div>
+        <h4>The status quo</h4>
+        <h3>Send plaintext, hope for the best.</h3>
+        <ul>
+          <li>
+            <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M6 18 18 6"/></svg>
+            Sensitive data leaves your environment in plaintext
+          </li>
+          <li>
+            <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M6 18 18 6"/></svg>
+            Compliance teams block the most valuable use cases
+          </li>
+          <li>
+            <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M6 18 18 6"/></svg>
+            "Privacy tech" exists but isn't deployable for business teams
+          </li>
+          <li>
+            <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M6 18 18 6"/></svg>
+            Most companies do nothing — and lose to faster competitors
+          </li>
+        </ul>
+      </div>
+      <div class="with">
+        <h4>With Nera</h4>
+        <h3>Use AI on the data you couldn't.</h3>
+        <ul>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+            Data is encrypted before it leaves your environment
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+            Processing happens directly on encrypted data
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+            Neither the LLM or Nera see your data
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>
+            Get insights with natural language queries — no programming necessary
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRICING ============== -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Pricing</span>
+      <h2>Plans That Scale With Your Team.</h2>
+      <p>From a single analyst exploring the product to enterprise-wide deployments with full audit and policy controls.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="tier featured">
+        <div class="tier-badge preview">Preview</div>
+        <div class="tier-name">Pro</div>
+        <div class="tier-desc">Secure chat-based analytics for individual analysts and small data teams getting started.</div>
+        <div class="price">
+          <div class="price-stack">
+            <span class="amount-old">$99</span>
+            <span class="amount">$20</span>
+          </div>
+          <span class="unit">per user / month<br><b class="unit-flag">preview pricing</b></span>
+        </div>
+        <div class="tier-cta">
+          <a class="btn btn-primary" href="https://nera.systems/contact.html">Get started →</a>
+        </div>
+        <div class="features-head">Includes</div>
+        <ul class="features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Secure chat-based analytics (ChatGPT-style UI)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Upload & query Excel (other formats coming soon)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Client-side encryption (zero plaintext exposure)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Built-in LLM credits</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Encrypted data processing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Standard usage limits</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <div class="tier-badge soon">Coming soon</div>
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-desc">For organizations deploying secure AI at scale — built for finance, healthcare, CPG, and any team that needs auditability and compliance.</div>
+        <div class="price">
+          <span class="amount">Custom</span>
+          <span class="unit">tailored<br>to your environment</span>
+        </div>
+        <div class="tier-cta">
+          <a class="btn btn-navy" href="https://nera.systems/contact.html">Contact sales →</a>
+        </div>
+        <div class="features-head">Everything in Pro, plus</div>
+        <ul class="features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>SSO & enterprise controls</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Role-based access control (RBAC)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Detailed audit logs (SIEM-ready)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Higher usage limits & larger datasets</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Priority performance</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 7"/></svg>Security & compliance features</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pricing-close">
+      <h3>See it in action — no signup required.</h3>
+      <p>The fastest way to understand the Secure Data Analyst is to use it. Drop in a spreadsheet and ask a question.</p>
+      <a class="btn btn-primary" href="https://chatapp.nera.systems">Try it <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand-col">
+        <a class="logo" href="https://nera.systems">
+          <div class="logo-mark"></div>
+          <div>
+            <div class="logo-text">NERA<small>SYSTEMS</small></div>
+          </div>
+        </a>
+        <p>Confidential AI for the data that matters most. Activate AI on your most sensitive data — without ever exposing it.</p>
+      </div>
+      <div class="col">
+        <h5>Product</h5>
+        <a href="#product">Secure Data Analyst</a>
+        <a href="#solution">The solution</a>
+        <a href="#diff">Why Nera</a>
+        <a href="https://chatapp.nera.systems">Live demo</a>
+      </div>
+      <div class="col">
+        <h5>Platform</h5>
+        <a href="https://nera.systems/solutions.html">Solutions</a>
+        <a href="#">Python SDK</a>
+        <a href="#">Custom applications</a>
+        <a href="#">Roadmap</a>
+      </div>
+      <div class="col">
+        <h5>Company</h5>
+        <a href="https://nera.systems/about">About</a>
+        <a href="https://nera.systems/contact.html">Contact</a>
+        <a href="mailto:info@nera.systems">info@nera.systems</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© Nera Systems · 2026</span>
+      <span>Built on the Nera Confidential AI Platform</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{ threshold: 0.12 });
+  document.querySelectorAll('.sec-head, .problem-card, .flow-step, .product-shell, .use, .compare, .tier, .pricing-close').forEach(el=>{
+    el.classList.add('reveal'); io.observe(el);
+  });
+</script>
+
+</body>
+</html>
